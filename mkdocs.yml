@@ -33,6 +33,7 @@ nav:
       - "PP1: GPT-2": practicals/pp1-gpt2.md
       - "PP2: Vision": practicals/pp2-vision.md
       - "PP3: CLIP": practicals/pp3-clip.md
+      - "PP4: Tokenizer": practicals/pp4-tokenizer.md
   - Lecture Notes: lecture_notes.md
 
 markdown_extensions:
