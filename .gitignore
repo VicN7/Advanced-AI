@@ -17,3 +17,4 @@ env/
 site/
 PP3: CLIP/data/cifar*
 PP3: CLIP/eval_cifar100_solution.py
+!PP5: Pretraining GPT2/data/french_philosophy/*.bin
