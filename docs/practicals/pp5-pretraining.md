@@ -182,15 +182,16 @@ uv run python mon_script.py
 ```
 
 You can find this tamplate on `sbatch_scripts/template.sbatch` in the project. Take the time to understand each `#SBATCH` line of the script:
-    - `--nodes 1`: Number of nodes to use (1 in our case)
-    - `--ntasks 1`: Number of tasks to run (1 in our case, it is the number of times the command will be run.
-    - `--cpus-per-task=8`: Number of CPU cores to allocate for this job (8 in our case, change it according to your needs)
-    - `--gres=gpu:1`: Number of GPU to use (1 in our case)
-    - `-p shared`: Partition to use (shared in our case, do not change this, it tells the cluster not to use the full node)
-    - `--time=00:15:00`: Time limit for the job (15 minutes in this case, change it according to your needs)
-    - `--reservation=tpirt4`: Reservation to use (tpirt4 in this case, change it according to the schedule of the PP sessions - see below)
-    - `--output`: Path to the file where the standard output of the job will be saved (change YOUR_USERNAME and the path according to your needs)
-    - `--error`: Path to the file where the standard error of the job will be saved (change YOUR_USERNAME and the path according to your needs)
+
+- `--nodes 1`: Number of nodes to use (1 in our case)
+- `--ntasks 1`: Number of tasks to run (1 in our case, it is the number of times the command will be run.
+- `--cpus-per-task=8`: Number of CPU cores to allocate for this job (8 in our case, change it according to your needs)
+- `--gres=gpu:1`: Number of GPU to use (1 in our case)
+- `-p shared`: Partition to use (shared in our case, do not change this, it tells the cluster not to use the full node)
+- `--time=00:15:00`: Time limit for the job (15 minutes in this case, change it according to your needs)
+- `--reservation=tpirt4`: Reservation to use (tpirt4 in this case, change it according to the schedule of the PP sessions - see below)
+- `--output`: Path to the file where the standard output of the job will be saved (change YOUR_USERNAME and the path according to your needs)
+- `--error`: Path to the file where the standard error of the job will be saved (change YOUR_USERNAME and the path according to your needs)
 
 **Replace `YOUR_USERNAME` and `mon_script.py` with your username and the script you want to run.**
 
