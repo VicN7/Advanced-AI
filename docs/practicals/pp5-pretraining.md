@@ -387,8 +387,8 @@ At the end of the training, you can sample from the finetuned model (from the ap
 
     ```bash
     module load conda
-    conda create --name tiktoken
-    conda activate tiktoken
+    conda create --name tiktoken_env
+    conda activate tiktoken_env
     conda install tiktoken
     python -c "import tiktoken; tiktoken.get_encoding('gpt2')"
     ``` 
