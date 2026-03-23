@@ -9,6 +9,8 @@ This Programming Practical explores **Self-Supervised Learning (SSL)** — train
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/paulnovello/Advanced-AI/blob/main/PP6%3ASSL/ssl_part1_pretext_tasks.ipynb)
 
+Solution: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/paulnovello/Advanced-AI/blob/main/PP6%3A%SSL/ssl_part1_pretext_tasks_solution.ipynb)
+
 All experiments share the **same small CNN backbone** (3 blocks, 256-d output). You first establish a **random baseline** (untrained backbone) and a **supervised upper bound** (~75–85%), then implement three pretext tasks:
 
 1. **Rotation Prediction** — Rotate images by {0°, 90°, 180°, 270°} and predict the angle. Implement `RotationDataset` and a linear head (256 → 4).
