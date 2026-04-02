@@ -7,7 +7,6 @@ class VLMConfig:
     lm_model_type: str = "HuggingFaceTB/SmolLM2-135M-Instruct"
     lm_tokenizer: str = "HuggingFaceTB/SmolLM2-135M-Instruct"
     image_token: str = "<|image|>"
-    mp_pixel_shuffle_factor: int = 4
     mp_image_token_length: int = 64
     lm_max_length: int = 1024
 

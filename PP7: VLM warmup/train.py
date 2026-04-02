@@ -15,7 +15,7 @@ from data.collators import VQACollator
 from data.datasets import VQADataset
 from data.processors import get_image_processor, get_tokenizer
 from models.config import TrainConfig, VLMConfig
-from models.vision_language_model import VisionLanguageModel
+from models.vision_language import VisionLanguageModel
 
 
 def parse_args():
@@ -48,7 +48,6 @@ def parse_args():
         "--lm-model", type=str, default="HuggingFaceTB/SmolLM2-135M-Instruct"
     )
     parser.add_argument("--tokenizer", type=str, default=None)
-    parser.add_argument("--pixel-shuffle-factor", type=int, default=4)
     parser.add_argument("--split-seed", type=int, default=0)
     parser.add_argument("--output-dir", type=str, default="checkpoints")
     parser.add_argument("--output-name", type=str, default="projector.pt")
@@ -114,11 +113,11 @@ def split_dataset(dataset, train_samples, val_samples, split_seed):
     return train_dataset, val_dataset
 
 
-def infer_num_image_tokens(vit_model_type, scale_factor):
+def infer_num_image_tokens(vit_model_type):
     config = AutoConfig.from_pretrained(vit_model_type)
     vision_config = config.vision_config if hasattr(config, "vision_config") else config
     grid_size = vision_config.image_size // vision_config.patch_size
-    return (grid_size // scale_factor) ** 2
+    return grid_size**2
 
 
 def build_dataloader(dataset, cfg, train_cfg, shuffle):
@@ -232,13 +231,9 @@ def main():
         vit_model_type=args.vit_model,
         lm_model_type=args.lm_model,
         lm_tokenizer=args.tokenizer or args.lm_model,
-        mp_pixel_shuffle_factor=args.pixel_shuffle_factor,
         lm_max_length=args.max_length,
     )
-    vlm_cfg.mp_image_token_length = infer_num_image_tokens(
-        vlm_cfg.vit_model_type,
-        vlm_cfg.mp_pixel_shuffle_factor,
-    )
+    vlm_cfg.mp_image_token_length = infer_num_image_tokens(vlm_cfg.vit_model_type)
     train_cfg = TrainConfig(
         dataset_path=args.dataset_path,
         dataset_names=tuple(args.dataset_name),

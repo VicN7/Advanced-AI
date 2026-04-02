@@ -13,19 +13,29 @@ class ModalityProjector(nn.Module):
         self.proj = nn.Linear(self.input_dim, self.output_dim, bias=False)
 
     def pixel_shuffle(self, x):
-        """
-        TODO:
-        1. Reshape the sequence of vision tokens into a square grid.
-        2. Group neighboring tokens according to `self.scale_factor`.
-        3. Concatenate their channel dimensions.
-        4. Return a sequence with fewer tokens and a larger hidden dimension.
-        """
-        raise NotImplementedError("Implement pixel_shuffle in PP7/models/modality_projector.py")
+        batch_size, seq_len, hidden_dim = x.size()
+        seq_root = int(seq_len**0.5)
+
+        assert seq_root * seq_root == seq_len, "The number of image tokens must be a square."
+        assert seq_root % self.scale_factor == 0, "The scale factor must divide the token grid."
+
+        x = x.view(batch_size, seq_root, seq_root, hidden_dim)
+
+        out_h = seq_root // self.scale_factor
+        out_w = seq_root // self.scale_factor
+        x = x.reshape(
+            batch_size,
+            out_h,
+            self.scale_factor,
+            out_w,
+            self.scale_factor,
+            hidden_dim,
+        )
+        x = x.permute(0, 1, 3, 2, 4, 5).contiguous()
+        x = x.reshape(batch_size, out_h * out_w, hidden_dim * (self.scale_factor**2))
+        return x
 
     def forward(self, x):
-        """
-        TODO:
-        1. Apply `pixel_shuffle`.
-        2. Project the shuffled features to the language hidden size.
-        """
-        raise NotImplementedError("Implement forward in PP7/models/modality_projector.py")
+        x = self.pixel_shuffle(x)
+        x = self.proj(x)
+        return x

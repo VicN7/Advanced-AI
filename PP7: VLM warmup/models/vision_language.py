@@ -29,15 +29,12 @@ class VisionLanguageModel(nn.Module):
         self.modality_projector = ModalityProjector(
             vision_hidden_dim=vision_hidden_dim,
             language_hidden_dim=language_hidden_dim,
-            scale_factor=cfg.mp_pixel_shuffle_factor,
         )
 
         image_size = self.vision_backbone.config.image_size
         patch_size = self.vision_backbone.config.patch_size
         grid_size = image_size // patch_size
-        self.cfg.mp_image_token_length = (
-            grid_size // self.cfg.mp_pixel_shuffle_factor
-        ) ** 2
+        self.cfg.mp_image_token_length = grid_size**2
 
     def _replace_img_tokens_with_embd(self, input_ids, token_embd, image_embd):
         updated_token_embd = token_embd.clone()

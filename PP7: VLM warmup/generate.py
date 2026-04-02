@@ -5,7 +5,7 @@ from PIL import Image
 
 from data.processors import get_image_string
 from models.config import VLMConfig
-from models.vision_language_model import VisionLanguageModel
+from models.vision_language import VisionLanguageModel
 
 
 def parse_args():
@@ -33,7 +33,9 @@ def load_model(args, device):
     cfg = VLMConfig()
     if args.checkpoint is not None:
         checkpoint = torch.load(args.checkpoint, map_location="cpu")
-        cfg = VLMConfig(**checkpoint["config"])
+        config_dict = dict(checkpoint["config"])
+        config_dict.pop("mp_pixel_shuffle_factor", None)
+        cfg = VLMConfig(**config_dict)
 
     model = VisionLanguageModel(cfg).to(device)
     if args.checkpoint is not None:
