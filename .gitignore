@@ -17,3 +17,4 @@ env/
 site/
 PP3: CLIP/data/cifar*
 !PP5: Pretraining GPT2/data/french_philosophy/*.bin
+nanoVLM
